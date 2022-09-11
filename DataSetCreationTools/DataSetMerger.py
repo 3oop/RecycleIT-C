@@ -8,14 +8,41 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
+def validate_paths(*args):
+    return True
+
+
+def merge(dataset1, dataset2, outpath, label='0'):
+    pass
+
+
+def checklabels(dataset1, dataset2):
+    return '0'
+
+
 def main(args):
+
+    dataset1 = args.dataset1
+    datasets = set(args.dataset2)
+    outpath = args.outpath
+    
+    if not validate_paths(dataset1, *datasets, outpath):
+        return False
+
     print(
-        "Path to Dataset 1:", args.dataset1,
-        *[f"\nPath to Dataset {i}: {path}" for path,i in zip(args.dataset2, range(2,len(args.dataset2)+2))],
-        "\nPath to output merged folder:", args.outpath
+        "Path to Dataset 1:", dataset1,
+        *[f"\nPath to Dataset {i}: {path}" for i,path in zip(range(2, len(datasets)+2), datasets)],
+        "\nPath to output merged folder:", outpath
     )
-    while 1:
-        print(args)
+
+    for dataset2 in datasets:
+        label = checklabels(dataset1, dataset2)
+        merge(dataset1, dataset2, outpath, label=label)
+        dataset1 = outpath
+        
+    x = input() # to halt it
+
 
 
 if __name__ == "__main__":
